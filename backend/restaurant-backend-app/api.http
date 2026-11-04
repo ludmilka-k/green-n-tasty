@@ -1,0 +1,211 @@
+////// API Routes/////
+
+### Auth register    ///// AUTH /////
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/register
+Content-Type: application/json
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "customer@mail.com",
+    "password": "yourExamplePass",
+    "confirmPassword": "yourExamplePass"
+}
+
+### Auth register waiter(optional)
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/register
+Content-Type: application/json
+
+{
+  "firstName": "Shon",
+  "lastName": "Waiter",
+  "email": "waiter@example.com",
+  "password": "yourExamplePass",
+  "confirmPassword": "yourExamplePass"
+}
+
+### Auth signin
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/signin
+Content-Type: application/json
+
+{
+  "email": "waiter@example.com",
+  "password": "yourExamplePass"
+}
+
+### Create locations    ///// LOCATIONS /////
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations
+Content-Type: application/json
+
+{
+  "address": "42 Haharina Avenue, Dnipro, Ukraine",
+  "description": "Family-friendly restaurant serving traditional Ukrainian cuisine, homemade desserts, and fresh seasonal dishes. Features a children's play area.",
+  "totalCapacity": 50,
+  "averageOccupancy": "60%",
+  "imageUrl": "https://GreenTasty/frontend/restaurant-frontend-app/src/assets/img/locations/rustaveli-avenue-48.jpg",
+  "rating": 4.5
+}
+
+### Get locations
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations
+
+### Get local menu
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/75047b6e-0af0-4c58-aaee-7a528ff88298/dishes
+
+### Delete dishec from local menu
+DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/{locationId}/dishes/{dishId}
+
+### Edit locations
+< {%
+    // 1. Read the file into Base64 using a native OS shell command
+    const command = 'base64 -i /Users/ludmila/WebstormProjects/GreenTasty/frontend/restaurant-frontend-app/src/assets/img/locations/haharina-avenue.jpg';
+    // 2. Execute synchronously and retrieve the string output
+    const base64String = execSync(command).trim();
+    // 3. Save it to a dynamic request variable
+    request.variables.set("file_data", base64String);
+%}
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/06a24ef9-7b5a-4bbc-a630-4ed86601b846
+Content-Type: application/json
+Authorization: Bearer ey*****sQ
+
+{
+  "address": "42 Haharina Avenue, Dnipro, Ukraine",
+  "description": "Family-friendly restaurant serving traditional Ukrainian cuisine, homemade desserts, and fresh seasonal dishes. Features a children's play area.",
+  "totalCapacity": 50,
+  "averageOccupancy": "60%",
+  "imageBase64": "{{file_data}}",
+  "rating": 4.5
+}
+
+### Delete locations by ID
+DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/7d598da3-0887-4a04-a3a1-fe26d8a4a4f2
+Authorization: Bearer ey*****sQ
+
+### Add waiter   ///// WAITERS /////
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/waiters
+Content-Type: application/json
+
+{
+  "email": "waiter@example.com",
+  "locationId": "75047b6e-0af0-4c58-aaee-7a528ff88298"
+}
+
+### Get waiters
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/75047b6e-0af0-4c58-aaee-7a528ff88298/waiters
+
+### Get waiter location
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/waiters/d4284418-6021-7031-e9c1-e07529f4d66c/location
+
+### Delete waiter
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/waiters
+Content-Type: application/json
+
+{
+  "email": "waiter@example.com",
+  "locationId": "75047b6e-0af0-4c58-aaee-7a528ff88298"
+}
+
+### Create dish    ///// DISHES /////
+< {%
+    // 1. Read the file into Base64 using a native OS shell command
+    const command = 'base64 -i /Users/ludmila/WebstormProjects/GreenTasty/frontend/restaurant-frontend-app/src/assets/img/dishes/spring-salad.jpg';
+    // 2. Execute synchronously and retrieve the string output
+    const base64String = execSync(command).trim();
+    // 3. Save it to a dynamic request variable
+    request.variables.set("file_data", base64String);
+%}
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes
+Content-Type: application/json
+
+{
+  "name": "Spring Salad Small",
+  "description": "A light and refreshing seasonal salad featuring crisp radishes, fresh cucumbers, baby spinach, mixed lettuce, green peas, spring onions, and fresh dill, tossed with a delicate lemon-olive oil dressing.",
+  "dishType": 0,
+  "price": 6.90,
+  "weight": "150 g",
+  "calories": "155 kcal",
+  "proteins": "5 g",
+  "fats": "8 g",
+  "carbohydrates": "14 g",
+  "vitamins": "A, C, E, K, B9",
+  "imageBase64": "{{file_data}}",
+  "state": 2,
+  "locationIds": ["75047b6e-0af0-4c58-aaee-7a528ff88298", "7d598da3-0887-4a04-a3a1-fe26d8a4a4f2"]
+}
+
+### Get dishes
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes
+
+### Edit dish by ID
+< {%
+    // 1. Read the file into Base64 using a native OS shell command
+    const command = 'base64 -i /Users/ludmila/WebstormProjects/GreenTasty/frontend/restaurant-frontend-app/src/assets/img/dishes/spring-salad-small.jpeg';
+    // 2. Execute synchronously and retrieve the string output
+    const base64String = execSync(command).trim();
+    // 3. Save it to a dynamic request variable
+    request.variables.set("file_data", base64String);
+%}
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes/e6a90681-778c-4355-89ac-418b885ed416
+Content-Type: application/json
+Authorization: Bearer ey*****4w
+
+{
+  "name": "Spring Salad",
+  "description": "A light and refreshing seasonal salad featuring crisp radishes, fresh cucumbers, baby spinach, mixed lettuce, green peas, spring onions, and fresh dill, tossed with a delicate lemon-olive oil dressing.",
+  "dishType": 1,
+  "price": 10.90,
+  "weight": "300 g",
+  "calories": "215 kcal",
+  "proteins": "7 g",
+  "fats": "12 g",
+  "carbohydrates": "22 g",
+  "vitamins": "A, C, E, K, B9",
+  "imageBase64": "{{file_data}}",
+  "state": 1,
+  "locationIds": ["75047b6e-0af0-4c58-aaee-7a528ff88298", "7d598da3-0887-4a04-a3a1-fe26d8a4a4f2"]
+}
+
+### Delete dishes by ID
+DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes/bf005b5a-a71f-473c-acc8-f38425c555fa?force=true
+Authorization: Bearer ey*****sQ
+
+
+### Get popular dishes
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes/popular
+
+### Get dish by ID
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes/43f20c3e-a4b1-4c48-a7a2-ae12e86691cb
+
+
+### Create table   ///// TABLES /////
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/tables
+Content-Type: application/json
+
+{
+  "locationId": "75047b6e-0af0-4c58-aaee-7a528ff88298",
+  "capacity": 2,
+  "tableNumber": 11
+}
+
+### Edit table by ID
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/tables/6f433b8f-c9a4-40de-bdf8-f166a41f027d
+Content-Type: application/json
+Authorization: Bearer ey*****Yg
+
+{
+  "capacity": 3,
+  "tableNumber": 10
+}
+
+### Delete table by ID
+DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/tables/998318f3-19c6-476b-9c1c-b047f84a7a3f
+Authorization: Bearer ey*****Yg
+
+### Get avalaible table
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/available-tables?locationId=2326ee0a-c5e9-4952-80bb-db5f991f6e77&capacity=3&startTime=2023-10-01T10:00:00Z
+
+### Get avalaible time slot tables
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/tables/2326ee0a-c5e9-4952-80bb-db5f991f6e77/available-time-slots?startTime=2023-10-01T10:00:00Z
+
+
+
