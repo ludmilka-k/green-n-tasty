@@ -1,36 +1,66 @@
 ////// API Routes/////
 
-### Auth register    ///// AUTH /////
+### Auth register admin   ///// AUTH /////
 POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/register
 Content-Type: application/json
 
 {
     "firstName": "John",
     "lastName": "Doe",
-    "email": "customer@mail.com",
-    "password": "yourExamplePass",
-    "confirmPassword": "yourExamplePass"
+    "email": "john_doe@mail.com",
+    "password": "1234SecurePass!",
+    "confirmPassword": "1234SecurePass!"
 }
 
-### Auth register waiter(optional)
+### Auth register customer
 POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/register
 Content-Type: application/json
 
 {
-  "firstName": "Shon",
-  "lastName": "Waiter",
-  "email": "waiter@example.com",
-  "password": "yourExamplePass",
-  "confirmPassword": "yourExamplePass"
+  "firstName": "Jane",
+  "lastName": "Customer",
+  "email": "customer@example.com",
+  "password": "4321SecurePass!",
+  "confirmPassword": "4321SecurePass!"
 }
 
-### Auth signin
+### Auth register waiter (changed bellow in user profile)
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/register
+Content-Type: application/json
+
+{
+  "firstName": "Tom",
+  "lastName": "Waiter",
+  "email": "waiter2@example.com",
+  "password": "5678SecurePass!",
+  "confirmPassword": "5678SecurePass!"
+}
+
+### Auth signin admin
 POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/signin
 Content-Type: application/json
 
 {
-  "email": "waiter@example.com",
-  "password": "yourExamplePass"
+  "email": "john_doe@mail.com",
+  "password": "1234SecurePass!"
+}
+
+### Auth signin customer
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/signin
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "password": "4321SecurePass!"
+}
+
+### Auth signin waiter
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/signin
+Content-Type: application/json
+
+{
+  "email": "waiter2@example.com",
+  "password": "5678SecurePass!"
 }
 
 ### Create locations    ///// LOCATIONS /////
@@ -53,7 +83,8 @@ GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations
 GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/75047b6e-0af0-4c58-aaee-7a528ff88298/dishes
 
 ### Delete dishec from local menu
-DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/{locationId}/dishes/{dishId}
+DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/06a24ef9-7b5a-4bbc-a630-4ed86601b846/dishes/e6a90681-778c-4355-89ac-418b885ed416
+Authorization: Bearer ey*****sQ
 
 ### Edit locations
 < {%
@@ -86,18 +117,18 @@ POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/waiters
 Content-Type: application/json
 
 {
-  "email": "waiter@example.com",
-  "locationId": "75047b6e-0af0-4c58-aaee-7a528ff88298"
+  "email": "waiter2@example.com",
+  "locationId": "06a24ef9-7b5a-4bbc-a630-4ed86601b846"
 }
 
-### Get waiters
+### Get waiters ???
 GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/75047b6e-0af0-4c58-aaee-7a528ff88298/waiters
 
 ### Get waiter location
 GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/waiters/d4284418-6021-7031-e9c1-e07529f4d66c/location
 
 ### Delete waiter
-GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/waiters
+DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/waiters
 Content-Type: application/json
 
 {
@@ -139,20 +170,20 @@ GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes
 ### Edit dish by ID
 < {%
     // 1. Read the file into Base64 using a native OS shell command
-    const command = 'base64 -i /Users/ludmila/WebstormProjects/GreenTasty/frontend/restaurant-frontend-app/src/assets/img/dishes/spring-salad-small.jpeg';
+    const command = 'base64 -i /Users/ludmila/WebstormProjects/GreenTasty/frontend/restaurant-frontend-app/src/assets/img/dishes/spring-salad.jpg';
     // 2. Execute synchronously and retrieve the string output
     const base64String = execSync(command).trim();
     // 3. Save it to a dynamic request variable
     request.variables.set("file_data", base64String);
 %}
-PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes/e6a90681-778c-4355-89ac-418b885ed416
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/dishes/b8746cb9-338d-4390-871a-76c5c123b130
 Content-Type: application/json
-Authorization: Bearer ey*****4w
+Authorization: Bearer ey*****KQ
 
 {
   "name": "Spring Salad",
   "description": "A light and refreshing seasonal salad featuring crisp radishes, fresh cucumbers, baby spinach, mixed lettuce, green peas, spring onions, and fresh dill, tossed with a delicate lemon-olive oil dressing.",
-  "dishType": 1,
+  "dishType": 0,
   "price": 10.90,
   "weight": "300 g",
   "calories": "215 kcal",
@@ -162,7 +193,7 @@ Authorization: Bearer ey*****4w
   "vitamins": "A, C, E, K, B9",
   "imageBase64": "{{file_data}}",
   "state": 1,
-  "locationIds": ["75047b6e-0af0-4c58-aaee-7a528ff88298", "7d598da3-0887-4a04-a3a1-fe26d8a4a4f2"]
+  "locationIds": ["75047b6e-0af0-4c58-aaee-7a528ff88298", "06a24ef9-7b5a-4bbc-a630-4ed86601b846", "2326ee0a-c5e9-4952-80bb-db5f991f6e77"]
 }
 
 ### Delete dishes by ID
@@ -202,10 +233,119 @@ DELETE https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/tables/998
 Authorization: Bearer ey*****Yg
 
 ### Get avalaible table
-GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/available-tables?locationId=2326ee0a-c5e9-4952-80bb-db5f991f6e77&capacity=3&startTime=2023-10-01T10:00:00Z
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/available-tables?locationId=75047b6e-0af0-4c58-aaee-7a528ff88298&capacity=4
+
+### Get tables by location ???
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/locations/2326ee0a-c5e9-4952-80bb-db5f991f6e77/tables/all
 
 ### Get avalaible time slot tables
-GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/tables/2326ee0a-c5e9-4952-80bb-db5f991f6e77/available-time-slots?startTime=2023-10-01T10:00:00Z
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/tables/2326ee0a-c5e9-4952-80bb-db5f991f6e77/available-time-slots?startTime=2026-10-04T18:00:00Z
+
+### Create Reservation   ///// RESERVATIONS /////
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/reservations
+Content-Type: application/json
+Authorization: Bearer ey*****HQ
+
+{
+  "tableId": "2b232f09-672e-414e-ac90-1102ab47ad8e",
+  "customerEmail": "customer@example.com",
+  "startTime": "2026-10-05T23:15:00Z",
+  "endTime": "2026-10-05T23:45:00Z",
+  "guestCount": 4,
+  "customerId": "843854b8-6051-70c9-14b8-d163aeacc64d"
+}
+
+### Edit Reservation
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/reservations
+Content-Type: application/json
+Authorization: Bearer ey*****HQ
+
+{
+  "reservationId": "18b75c0b-a06c-4945-9a30-973799dd51fc",
+  "startTime": "2026-10-07T17:00:00Z",
+  "endTime": "2026-10-07T18:30:00Z",
+  "guestCount": 4
+}
+
+### Get Reservations
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/reservations
+Authorization: Bearer ey*****HQ
+
+### Get me     ///// USER PROFILE /////
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/me
+Authorization: Bearer ey*****HQ
+
+### Edit profile name
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/me
+Authorization: Bearer ey*****mw
+
+{
+  "firstName": "Shon",
+  "lastName": "Pen"
+}
+
+### Change password
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/me/change-password
+Authorization: Bearer ey*****mw
+
+{
+  "oldPassword": "5678SecurePass!",
+  "newPassword": "6789SecurePass!",
+  "accessToken": "ey*****6w"
+}
+
+### Get user info
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/users?fullName=shon
+Authorization: Bearer ey*****mw
+
+### Get user image
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/users/d4284418-6021-7031-e9c1-e07529f4d66c/profile-image
+Authorization: Bearer ey*****mw
 
 
+### Edit profile image
+< {%
+    // 1. Read the file into Base64 using a native OS shell command
+    const command = 'base64 -i /Users/ludmila/WebstormProjects/GreenTasty/frontend/restaurant-frontend-app/src/assets/img/avatar-mario.jpg';
+    // 2. Execute synchronously and retrieve the string output
+    const base64String = execSync(command).trim();
+    // 3. Save it to a dynamic request variable
+    request.variables.set("file_data", base64String);
+%}
+PUT https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/me/profile-image
+Authorization: Bearer ey*****mw
 
+{
+  "base64Image": "{{file_data}}"
+}
+
+### Get user name
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/users/d4284418-6021-7031-e9c1-e07529f4d66c/name
+Authorization: Bearer ey*****mw
+
+
+### Get orders     ///// ORDERS /////
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/orders
+Authorization: Bearer ey*****tg
+
+### Get order by reservation ID
+GET https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/orders/555c0df7-c86d-4ee3-b055-08d77d7f4887
+Authorization: Bearer ey*****tg
+
+### Create order
+POST https://ifwetfsxed.execute-api.us-east-1.amazonaws.com/develop/orders
+Authorization: Bearer ey*****tg
+
+{
+  "reservationId": "18b75c0b-a06c-4945-9a30-973799dd51fc",
+  "orderItems": [
+    {
+      "dishId": "bd9b0a0e-fff4-46bf-8fd5-a57ee7285e03",
+      "quantity": 1
+    },
+    {
+      "dishId": "cb6a4355-b5e2-490d-b484-c472a889f745",
+      "quantity": 2
+    }
+  ]
+}
